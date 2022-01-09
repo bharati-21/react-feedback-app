@@ -1,32 +1,29 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import {nanoid} from 'nanoid';
 
 export const FeedbackContext = createContext();
 
 export default function FeedbackProvider ({children})  {
 
-    const [feedback, setFeedback] = useState([
-        {
-            id: 1,
-            text: 'This is feedback item 1',
-            rating: 10
-        },
-        {
-            id: 2,
-            text: 'This is feedback item 2',
-            rating: 9
-        },
-        {
-            id: 3,
-            text: 'This is feedback item 3',
-            rating: 8
-        },
-    ]);
-
+    const [isLoading, setIsLoading] = useState(true);
+    const [feedback, setFeedback] = useState([]);
     const [feedbackEdit, setFeedbackEdit] = useState({
         item: {},
         edit: false
-    })
+    });
+
+    useEffect(() => {
+        fetchFeedback();
+    }, [])
+
+    // fectch feedback
+
+    const fetchFeedback = async () => {
+        const res = await fetch('http://localhost:5000/feedback?_sort=id&_order=desc');
+        const data = await res.json();
+        setFeedback(data);
+        setIsLoading(false);
+    }
 
     // Remove feedback
     function removeFeedback(id) {
@@ -64,6 +61,7 @@ export default function FeedbackProvider ({children})  {
         {
             feedback,
             feedbackEdit,
+            isLoading,
             removeFeedback, 
             addFeedback,
             editFeedback,
