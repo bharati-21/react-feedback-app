@@ -10,7 +10,7 @@ function FeedbackForm() {
     });
 
     const [error, setError] = useState(true);
-    const {addFeedback, feedbackEdit, updateFeedbackItem} = useContext(FeedbackContext);
+    const {addFeedback, feedbackEdit, updateFeedbackItem, editFeedback} = useContext(FeedbackContext);
 
     useEffect(() => {
         if(feedbackEdit.edit === true) {
@@ -44,6 +44,7 @@ function FeedbackForm() {
             }
             if(feedbackEdit.edit) {
                 updateFeedbackItem(feedbackEdit.item.id, newFeedback);
+                editFeedback({});
             }
             else {
                 addFeedback(newFeedback);
