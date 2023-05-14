@@ -1,5 +1,6 @@
 {
   "name": "react-feedback-app",
+  "homepage": "https://bharati-21.github.io/react-feedback-app",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",
@@ -24,8 +25,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server --watch db.json --port 5000",
-    "dev": "concurrently \"npm run server\" \"npm start\""
+    "server": "npx json-server --watch db.json --port=5000",
+    "dev": "concurrently \"npm run server\" \"npm start\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
